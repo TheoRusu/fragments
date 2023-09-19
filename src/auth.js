@@ -40,7 +40,6 @@ module.exports.strategy = () =>
   // For our Passport authentication strategy, we'll look for the Bearer Token
   // in the Authorization header, then verify that with our Cognito JWT Verifier.
   new BearerStrategy(async (token, done) => {
-    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
     try {
       // Verify this JWT
       const user = await jwtVerifier.verify(token);
