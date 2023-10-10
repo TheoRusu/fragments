@@ -3,6 +3,7 @@
 const request = require('supertest');
 
 const app = require('../../src/app');
+const hash = require('../../src/hash');
 
 describe('POST /v1/fragments', () => {
   test('unauthenticated requests are denied', () => request(app).post('/v1/fragments').expect(401));
@@ -41,7 +42,7 @@ describe('POST /v1/fragments', () => {
 
     // FIX THIS LATER
     expect(res.body.fragment.size).toEqual(14);
-    expect(res.body.fragment.ownerId).toEqual('user1@email.com');
+    expect(res.body.fragment.ownerId).toEqual(hash('user1@email.com'));
   });
 
   test('response includes location header', async () => {
