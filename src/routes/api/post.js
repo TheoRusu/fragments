@@ -21,6 +21,10 @@ module.exports = async (req, res) => {
 
     await fragment.setData(req.body);
 
+    fragment.save();
+
+    logger.debug({ fragment }, 'POST: OWNER ID');
+
     const url = process.env.API_URL || `http://${req.headers.host}`;
     const fragmentURL = new URL(`/v1/fragments/${fragment.id}`, url);
 
