@@ -1,6 +1,3 @@
-// Fix this path to point to your project's `memory-db.js` source file
-// const logger = require('../../src/logger');
-const logger = require('../../src/logger');
 const {
   writeFragment,
   writeFragmentData,
@@ -27,6 +24,7 @@ describe('memory', () => {
     buffer: 'some data',
   };
 
+  // writeFragment tests
   test('writeFragment - successful write', async () => {
     const result = await writeFragment(fragment);
     expect(result).resolves;
@@ -56,6 +54,7 @@ describe('memory', () => {
     }
   });
 
+  // readFragment tests
   test('readFragment - successful read', async () => {
     const result = await readFragment(fragment.ownerId, fragment.id);
     expect(result).toEqual(fragment);
@@ -85,6 +84,7 @@ describe('memory', () => {
     }
   });
 
+  // writeFragmentData tests
   test('writeFragmentData - successful write', async () => {
     const result = await writeFragmentData(fragment.ownerId, fragment.id, fragment.buffer);
     expect(result).resolves;
@@ -114,6 +114,7 @@ describe('memory', () => {
     }
   });
 
+  // readFragmentData tests
   test('readFragmentData - successful read', async () => {
     const result = await readFragmentData(fragment.ownerId, fragment.id);
     expect(result).toEqual(fragment.buffer);
