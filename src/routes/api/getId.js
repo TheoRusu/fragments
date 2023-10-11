@@ -12,7 +12,8 @@ module.exports = async (req, res) => {
   try {
     const fragment = await Fragment.byId(req.user, id);
 
-    logger.debug(fragment, 'FRAGMENT RETURNED');
+    logger.debug(fragment, 'GET :id - Fragment returned');
+
     res.status(200).json(createSuccessResponse({ fragment: fragment }));
   } catch (err) {
     res.status(404).json(createErrorResponse(404, 'Fragment does not exist', err));

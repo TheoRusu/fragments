@@ -13,6 +13,7 @@ const {
   listFragments,
   deleteFragment,
 } = require('./data');
+const logger = require('../logger');
 
 class Fragment {
   constructor({
@@ -27,9 +28,13 @@ class Fragment {
       throw new Error('missing ownerId/type');
     }
     if (typeof size !== 'number' || size < 0) {
+      logger.warn(`Size must be a non-negative number: ${size}`);
       throw new Error('size must be a non-negative number');
     }
     if (!(type === 'text/plain' || type === 'text/plain; charset=utf-8')) {
+      logger.warn(
+        `Entered Type: ${type}supported types are text/plain and text/plain; charset=utf-8`
+      );
       throw new Error('supported types are text/plain and text/plain; charset=utf-8');
     }
 

@@ -23,12 +23,14 @@ module.exports = async (req, res) => {
 
     fragment.save();
 
-    logger.debug({ fragment }, 'POST: OWNER ID');
+    logger.debug({ fragment }, 'POST - Fragment saved');
 
     const url = process.env.API_URL || `http://${req.headers.host}`;
     const fragmentURL = new URL(`/v1/fragments/${fragment.id}`, url);
 
     res.setHeader('location', fragmentURL);
+
+    logger.info('Fragment is saved at: ' + fragmentURL);
 
     return res.status(201).json(createSuccessResponse({ fragment: fragment }));
   } catch (err) {

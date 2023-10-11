@@ -115,7 +115,6 @@ describe('Fragment class', () => {
       });
       expect(Date.parse(fragment.updated)).not.toBeNaN();
     });
-    //   });
 
     describe('isSupportedType()', () => {
       test('common text types are supported, with and without charset', () => {
@@ -149,7 +148,6 @@ describe('Fragment class', () => {
       });
 
       test('isText return expected results', () => {
-        // Text fragment
         const fragment = new Fragment({
           ownerId: '1234',
           type: 'text/plain; charset=utf-8',

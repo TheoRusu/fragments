@@ -1,5 +1,3 @@
-// tests/unit/post.test.js
-
 const request = require('supertest');
 
 const app = require('../../src/app');
@@ -37,10 +35,6 @@ describe('POST /v1/fragments', () => {
     expect(Date.parse(res.body.fragment.updated)).not.toBeNaN();
     expect(res.body.fragment.type).toEqual('text/plain' || 'text/plain; charset=utf-8');
 
-    // const textEncoder = new TextEncoder();
-    // const bytes = textEncoder.encode(testData);
-
-    // FIX THIS LATER
     expect(res.body.fragment.size).toEqual(14);
     expect(res.body.fragment.ownerId).toEqual(hash('user1@email.com'));
   });

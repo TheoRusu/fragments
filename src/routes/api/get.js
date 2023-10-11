@@ -1,5 +1,3 @@
-// src/routes/api/get.js
-
 const logger = require('../../logger');
 const { Fragment } = require('../../model/fragment');
 const { createSuccessResponse } = require('../../response');
@@ -9,6 +7,6 @@ const { createSuccessResponse } = require('../../response');
  */
 module.exports = async (req, res) => {
   const fragments = await Fragment.byUser(req.user, false);
-  logger.debug(fragments, 'FRAGMENTS RETURNED');
+  logger.debug(fragments, 'GET - Fragments array returned');
   res.status(200).json(createSuccessResponse({ fragments: fragments }));
 };
