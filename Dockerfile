@@ -1,4 +1,4 @@
-# This is a Dockerfile. Tis defines a set of instructions used by the Docker Engine to create a Docker Image.
+# This is a Dockerfile. This defines a set of instructions used by the Docker Engine to create a Docker Image.
 
 # Stage 0: install the base dependencies
 FROM node:16.10.0-alpine3.14 AS dependencies
