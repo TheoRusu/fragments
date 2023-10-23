@@ -1,6 +1,9 @@
 # This is a Dockerfile. Tis defines a set of instructions used by the Docker Engine to create a Docker Image.
 
-FROM node:16.10.0
+# Stage 0: install the base dependencies
+FROM node:16.10.0-alpine3.14 AS dependencies
+
+ENV NODE_ENV=production
 
 LABEL maintainer="Theo Rusu trusu1@myseneca.ca"
 LABEL description="Fragments node.js microservice"
@@ -22,7 +25,7 @@ WORKDIR /app
 COPY package*.json /app/
 
 # Install node dependencies defined in package-lock.json
-RUN npm install
+RUN npm ci --production
 
 # Copy src to /app/src/
 COPY ./src ./src
@@ -35,6 +38,8 @@ COPY ./tests/.htpasswd ./tests/.htpasswd
 
 # Start the container by running our server
 CMD npm start
+
+HEALTHCHECK --interval=3m CMD curl --fail https://localhost:${PORT}/ || exit 1
 
 # We run our service on port 8080
 EXPOSE 8080
