@@ -146,7 +146,11 @@ class Fragment {
    * @returns {boolean} true if we support this Content-Type (i.e., type/subtype)
    */
   static isSupportedType(value) {
-    return value === 'text/plain' || value === 'text/plain; charset=utf-8';
+    return (
+      value === 'text/plain' ||
+      value === 'text/plain; charset=utf-8' ||
+      value === 'application/json'
+    );
   }
 }
 
