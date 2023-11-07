@@ -37,7 +37,8 @@ COPY ./src ./src
 COPY ./tests/.htpasswd ./tests/.htpasswd
 
 # Start the container by running our server
-CMD npm start
+CMD ["npm", "start"]
+
 
 HEALTHCHECK --interval=3m CMD curl --fail https://localhost:${PORT}/ || exit 1
 
