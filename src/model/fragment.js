@@ -109,7 +109,7 @@ class Fragment {
       throw new Error('setData: missing data');
     }
     this.updated = new Date();
-    this.size++;
+    this.size = data.byteLength;
     return writeFragmentData(this.ownerId, this.id, data);
   }
 
@@ -136,7 +136,7 @@ class Fragment {
    * @returns {Array<string>} list of supported mime types
    */
   get formats() {
-    const supportedFormats = ['text/plain'];
+    const supportedFormats = [/^text\//, 'application/json'];
     return supportedFormats;
   }
 
@@ -147,8 +147,9 @@ class Fragment {
    */
   static isSupportedType(value) {
     return (
-      value === 'text/plain' ||
-      value === 'text/plain; charset=utf-8' ||
+      /^text\//.test(value) ||
+      // value === 'text/plain' ||
+      // value === 'text/plain; charset=utf-8' ||
       value === 'application/json'
     );
   }

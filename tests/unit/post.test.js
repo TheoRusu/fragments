@@ -35,7 +35,7 @@ describe('POST /v1/fragments', () => {
     expect(Date.parse(res.body.fragment.updated)).not.toBeNaN();
     expect(res.body.fragment.type).toEqual('text/plain' || 'text/plain; charset=utf-8');
 
-    expect(res.body.fragment.size).toEqual(14);
+    expect(res.body.fragment.size).toEqual(testData.length);
     expect(res.body.fragment.ownerId).toEqual(hash('user1@email.com'));
   });
 

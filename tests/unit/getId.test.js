@@ -33,9 +33,29 @@ describe('GET /v1/fragments', () => {
       .get(`/v1/fragments/${res.body.fragment.id}`)
       .auth('user1@email.com', 'password1');
 
-    const fragment = res1.body;
+    const fragmentData = res1.body.fragmentData;
 
-    logger.debug({ fragment }, 'GETID: Fragment');
-    expect(res1.body.fragment.id).toEqual(res.body.fragment.id);
+    logger.debug({ fragmentData }, 'GETID: fragmentData');
+    expect(res1.body.fragmentData.data.length).toEqual(res.body.fragment.size);
+  });
+
+  test('posting a fragment and getting the expected type', async () => {
+    const res = await request(app)
+      .post('/v1/fragments')
+      .auth('user1@email.com', 'password1')
+      .set('Content-Type', 'text/plain')
+      .send('Test Fragment');
+
+    expect(res.statusCode).toBe(201);
+    expect(res.body.status).toBe('ok');
+
+    const res1 = await request(app)
+      .get(`/v1/fragments/${res.body.fragment.id}`)
+      .auth('user1@email.com', 'password1');
+
+    const fragmentType = res1.body.fragmentType;
+
+    logger.debug({ fragmentType }, 'GETID: fragmentData');
+    expect(fragmentType).toEqual('text/plain');
   });
 });

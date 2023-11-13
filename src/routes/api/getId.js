@@ -12,9 +12,13 @@ module.exports = async (req, res) => {
   try {
     const fragment = await Fragment.byId(req.user, id);
 
-    logger.debug(fragment, 'GET :id - Fragment returned');
+    const fragmentData = await fragment.getData();
 
-    res.status(200).json(createSuccessResponse({ fragment: fragment }));
+    logger.debug(fragmentData, 'GET :id - FragmentData returned');
+
+    res
+      .status(200)
+      .json(createSuccessResponse({ fragmentData: fragmentData, fragmentType: fragment.type }));
   } catch (err) {
     res.status(404).json(createErrorResponse(404, 'Fragment does not exist', err));
   }
