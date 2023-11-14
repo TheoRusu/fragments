@@ -3,7 +3,7 @@ const request = require('supertest');
 const app = require('../../src/app');
 const logger = require('../../src/logger');
 
-describe('GET /v1/fragments', () => {
+describe('GET /v1/fragments/:id', () => {
   test('unauthenticated requests are denied', () =>
     request(app).get('/v1/fragments/:50').expect(401));
 
@@ -55,7 +55,7 @@ describe('GET /v1/fragments', () => {
 
     const fragmentType = res1.body.fragmentType;
 
-    logger.debug({ fragmentType }, 'GETID: fragmentData');
+    // logger.debug({ fragmentType }, 'GETID: fragmentData');
     expect(fragmentType).toEqual('text/plain');
   });
 });

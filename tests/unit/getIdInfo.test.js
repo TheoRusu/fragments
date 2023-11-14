@@ -3,7 +3,7 @@ const request = require('supertest');
 const app = require('../../src/app');
 const logger = require('../../src/logger');
 
-describe('GET /v1/fragments', () => {
+describe('GET /v1/fragments/:id/info', () => {
   test('unauthenticated requests are denied', () =>
     request(app).get('/v1/fragments/:50/info').expect(401));
 

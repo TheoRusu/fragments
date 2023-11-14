@@ -31,7 +31,7 @@ class Fragment {
       logger.warn(`Size must be a non-negative number: ${size}`);
       throw new Error('size must be a non-negative number');
     }
-    if (!(type === 'text/plain' || type === 'text/plain; charset=utf-8')) {
+    if (!Fragment.isSupportedType(type)) {
       logger.warn(
         `Entered Type: ${type}supported types are text/plain and text/plain; charset=utf-8`
       );
@@ -147,7 +147,7 @@ class Fragment {
    */
   static isSupportedType(value) {
     return (
-      /^text\//.test(value) ||
+      /^text\//.test(value) == true ||
       // value === 'text/plain' ||
       // value === 'text/plain; charset=utf-8' ||
       value === 'application/json'
