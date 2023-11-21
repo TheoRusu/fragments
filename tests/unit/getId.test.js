@@ -33,10 +33,8 @@ describe('GET /v1/fragments/:id', () => {
       .get(`/v1/fragments/${res.body.fragment.id}`)
       .auth('user1@email.com', 'password1');
 
-    const fragmentData = res1.body.fragmentData;
-
-    logger.debug({ fragmentData }, 'GETID: fragmentData');
-    expect(res1.body.fragmentData.data.length).toEqual(res.body.fragment.size);
+    logger.debug({ res1 }, 'TEST RESPONSE BODY');
+    expect(res1.text).toBe('Test Fragment');
   });
 
   test('posting a fragment and getting the expected type', async () => {
@@ -53,7 +51,7 @@ describe('GET /v1/fragments/:id', () => {
       .get(`/v1/fragments/${res.body.fragment.id}`)
       .auth('user1@email.com', 'password1');
 
-    const fragmentType = res1.body.fragmentType;
+    const fragmentType = res1.headers['content-type'];
 
     // logger.debug({ fragmentType }, 'GETID: fragmentData');
     expect(fragmentType).toEqual('text/plain');

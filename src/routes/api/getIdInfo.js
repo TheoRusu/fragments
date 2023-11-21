@@ -5,7 +5,7 @@ const { Fragment } = require('../../model/fragment');
 const { createSuccessResponse, createErrorResponse } = require('../../response');
 
 /**
- * Get a list of fragments for the current user
+ * Get the fragment metadata for a specific fragment
  */
 module.exports = async (req, res) => {
   const id = req.params.id;

@@ -1,13 +1,13 @@
 const logger = require('../../logger');
 const { Fragment } = require('../../model/fragment');
 const { createSuccessResponse, createErrorResponse } = require('../../response');
-const contentType = require('content-type');
 
 /**
  * Creates a new fragment for the current user
  */
 module.exports = async (req, res) => {
-  const { type } = contentType.parse(req);
+  // const { type } = contentType.parse(req);
+  const type = req.get('Content-Type');
   if (!Fragment.isSupportedType(type)) {
     return res.status(415).json(createErrorResponse(415, 'Unsupported content type'));
   }
