@@ -12,6 +12,7 @@ const router = express.Router();
 const { authenticate } = require('../auth');
 const { createSuccessResponse } = require('../response');
 
+const { hostname } = require('os');
 /**
  * Expose all of our API routes on /v1/* to include an API version.
  * Protect them all so you have to be authenticated in order to access.
@@ -28,7 +29,12 @@ router.get('/', (req, res) => {
   res
     .status(200)
     .json(
-      createSuccessResponse({ author, githubUrl: 'https://github.com/TheoRusu/fragments', version })
+      createSuccessResponse({
+        author,
+        githubUrl: 'https://github.com/TheoRusu/fragments',
+        version,
+        hostname: hostname(),
+      })
     );
 });
 
