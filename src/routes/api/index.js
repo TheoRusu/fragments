@@ -33,6 +33,8 @@ router.get('/fragments/:id.:ext?', require('./getId'));
 
 router.get('/fragments/:id/info', require('./getIdInfo'));
 
+router.delete('/fragments/:id', require('./delete'));
+
 // router.get('/fragments/:id.:ext', require('./getIdExt'));
 
 // router.get('/fragments?expand=1', require('./getExpand'));
