@@ -19,8 +19,8 @@ class Fragment {
   constructor({
     id = randomUUID(),
     ownerId,
-    created = new Date(),
-    updated = new Date(),
+    created = new Date().toString(),
+    updated = new Date().toString(),
     type,
     size = 0,
   }) {
