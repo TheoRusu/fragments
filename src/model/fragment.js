@@ -87,7 +87,7 @@ class Fragment {
    * @returns Promise<void>
    */
   save() {
-    this.updated = new Date();
+    this.updated = new Date().toString();
     return writeFragment(this);
   }
 
