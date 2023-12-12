@@ -36,6 +36,6 @@ describe('GET /v1/fragments/:id/info', () => {
     const fragment = res1.body;
 
     logger.debug({ fragment }, 'GET:ID/Info - Fragment');
-    expect(res1.body.fragmentMetadata.id).toEqual(res.body.fragment.id);
+    expect(res1.body.fragment.id).toEqual(res.body.fragment.id);
   });
 });

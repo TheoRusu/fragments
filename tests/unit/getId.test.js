@@ -1,7 +1,6 @@
 const request = require('supertest');
 
 const app = require('../../src/app');
-const logger = require('../../src/logger');
 
 describe('GET /v1/fragments/:id', () => {
   test('unauthenticated requests are denied', () =>
@@ -13,47 +12,19 @@ describe('GET /v1/fragments/:id', () => {
       .auth('invalid@email.com', 'incorrect_password')
       .expect(401));
 
-  test('authenticated users give success result', async () => {
-    const res = await request(app).get('/v1/fragments').auth('user1@email.com', 'password1');
-    expect(res.statusCode).toBe(200);
-    expect(res.body.status).toBe('ok');
-  });
-
-  test('posting a fragment and getting it', async () => {
-    const res = await request(app)
+  test('fragment data is retrieved by id', async () => {
+    const postRes = await request(app)
       .post('/v1/fragments')
       .auth('user1@email.com', 'password1')
       .set('Content-Type', 'text/plain')
       .send('Test Fragment');
 
-    expect(res.statusCode).toBe(201);
-    expect(res.body.status).toBe('ok');
-
-    const res1 = await request(app)
-      .get(`/v1/fragments/${res.body.fragment.id}`)
+    const getRes = await request(app)
+      .get(`/v1/fragments/${postRes.body.fragment.id}`)
       .auth('user1@email.com', 'password1');
 
-    logger.debug({ res1 }, 'TEST RESPONSE BODY');
-    expect(res1.text).toBe('Test Fragment');
-  });
-
-  test('posting a fragment and getting the expected type', async () => {
-    const res = await request(app)
-      .post('/v1/fragments')
-      .auth('user1@email.com', 'password1')
-      .set('Content-Type', 'text/plain')
-      .send('Test Fragment');
-
-    expect(res.statusCode).toBe(201);
-    expect(res.body.status).toBe('ok');
-
-    const res1 = await request(app)
-      .get(`/v1/fragments/${res.body.fragment.id}`)
-      .auth('user1@email.com', 'password1');
-
-    const fragmentType = res1.headers['content-type'];
-
-    // logger.debug({ fragmentType }, 'GETID: fragmentData');
-    expect(fragmentType).toEqual('text/plain');
+    expect(getRes.statusCode).toBe(200);
+    expect(getRes.text).toBe('Test Fragment');
+    expect(getRes.headers['content-type']).toBe('text/plain');
   });
 });

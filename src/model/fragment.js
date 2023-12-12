@@ -19,8 +19,8 @@ class Fragment {
   constructor({
     id = randomUUID(),
     ownerId,
-    created = new Date().toString(),
-    updated = new Date().toString(),
+    created = new Date().toISOString(),
+    updated = new Date().toISOString(),
     type,
     size = 0,
   }) {
@@ -87,7 +87,7 @@ class Fragment {
    * @returns Promise<void>
    */
   save() {
-    this.updated = new Date().toString();
+    this.updated = new Date().toISOString();
     return writeFragment(this);
   }
 
@@ -108,7 +108,7 @@ class Fragment {
     if (!data) {
       throw new Error('setData: missing data');
     }
-    this.updated = new Date();
+    this.updated = new Date().toISOString();
     this.size = data.byteLength;
     return writeFragmentData(this.ownerId, this.id, data);
   }

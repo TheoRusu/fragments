@@ -22,12 +22,12 @@ user1@email.com:password1
 HTTP/1.1 200
 [Asserts]
 jsonpath "$.status" == "ok"
-jsonpath "$.fragmentMetadata.id" == {{fragment1_id}}
-jsonpath "$.fragmentMetadata.ownerId" matches "^[0-9a-fA-F]+$"
-jsonpath "$.fragmentMetadata.type" == "application/json"
-jsonpath "$.fragmentMetadata.size" == 25
-jsonpath "$.fragmentMetadata.created" isString
-jsonpath "$.fragmentMetadata.updated" isString
+jsonpath "$.fragment.id" == {{fragment1_id}}
+jsonpath "$.fragment.ownerId" matches "^[0-9a-fA-F]+$"
+jsonpath "$.fragment.type" == "application/json"
+jsonpath "$.fragment.size" == 25
+jsonpath "$.fragment.created" isString
+jsonpath "$.fragment.updated" isString
 
 
 # 4. POST a second Markdown fragment to http://localhost:8080 
@@ -56,12 +56,12 @@ user1@email.com:password1
 HTTP/1.1 200
 [Asserts]
 jsonpath "$.status" == "ok"
-jsonpath "$.fragmentMetadata.id" == {{fragment1_id}}
-jsonpath "$.fragmentMetadata.ownerId" matches "^[0-9a-fA-F]+$"
-jsonpath "$.fragmentMetadata.type" == "application/json"
-jsonpath "$.fragmentMetadata.size" == 25
-jsonpath "$.fragmentMetadata.created" isString
-jsonpath "$.fragmentMetadata.updated" isString
+jsonpath "$.fragment.id" == {{fragment1_id}}
+jsonpath "$.fragment.ownerId" matches "^[0-9a-fA-F]+$"
+jsonpath "$.fragment.type" == "application/json"
+jsonpath "$.fragment.size" == 25
+jsonpath "$.fragment.created" isString
+jsonpath "$.fragment.updated" isString
 
 # 7. GET all of the fragments for the same authorized user without expanding 
 # them (i.e., just get back the IDs) and confirm that the list of fragments 
