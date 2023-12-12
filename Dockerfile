@@ -25,7 +25,8 @@ WORKDIR /app
 COPY package*.json /app/
 
 # Install node dependencies defined in package-lock.json
-RUN npm ci --production
+RUN npm ci --omit=dev && \
+  npm install --platform=linuxmusl --arch=x64 sharp@0.32.5 
 
 # Copy src to /app/src/
 COPY ./src ./src
