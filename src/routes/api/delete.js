@@ -8,6 +8,6 @@ module.exports = async (req, res) => {
     await Fragment.delete(req.user, req.params.id);
     res.status(200).json(createSuccessResponse());
   } catch (err) {
-    res.status(404).json(createErrorResponse(404, 'Fragment does not exist', err));
+    res.status(404).json(createErrorResponse(404, err.message));
   }
 };

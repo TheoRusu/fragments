@@ -35,6 +35,6 @@ module.exports = async (req, res) => {
     return res.status(201).json(createSuccessResponse({ fragment: fragment }));
   } catch (err) {
     logger.error({ err }, 'Unable to create new fragment');
-    res.status(400).json(createErrorResponse(400, 'Unable to create new fragment', err));
+    res.status(400).json(createErrorResponse(400, err.message));
   }
 };

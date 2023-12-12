@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
     res.status(200).send(fragmentData);
     return;
   } catch (err) {
-    res.status(404).json(createErrorResponse(404, 'Fragment does not exist', err.message));
+    res.status(404).json(createErrorResponse(404, err.message));
   }
   // const id = req.params.id;
   // const ext = req.params.ext;
