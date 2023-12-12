@@ -16,7 +16,7 @@ module.exports = async (req, res) => {
     const fragment = new Fragment({
       ownerId: req.user,
       type: type,
-      size: req.body.byteLength,
+      size: Buffer.byteLength(req.body),
     });
 
     await fragment.setData(req.body);
