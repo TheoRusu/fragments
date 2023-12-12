@@ -4,6 +4,9 @@ const { randomUUID } = require('crypto');
 // Use https://www.npmjs.com/package/content-type to create/parse Content-Type headers
 const contentType = require('content-type');
 
+var md = require('markdown-it')();
+const sharp = require('sharp');
+
 // Functions for working with fragment metadata/data using our DB
 const {
   readFragment,
@@ -14,6 +17,18 @@ const {
   deleteFragment,
 } = require('./data');
 const logger = require('../logger');
+
+const validFileTypes = {
+  txt: 'text/plain',
+  txtCharset: 'text/plain; charset=utf-8',
+  md: 'text/markdown',
+  html: 'text/html',
+  json: 'application/json',
+  png: 'image/png',
+  jpg: 'image/jpeg',
+  webp: 'image/webp',
+  gif: 'image/gif',
+};
 
 class Fragment {
   constructor({
@@ -64,12 +79,12 @@ class Fragment {
    * @returns Promise<Fragment>
    */
   static async byId(ownerId, id) {
-    const result = await readFragment(ownerId, id);
+    const fragment = await readFragment(ownerId, id);
 
-    if (!result) {
+    if (!fragment) {
       throw new Error('fragment does not exist');
     }
-    return result;
+    return fragment;
   }
 
   /**
@@ -136,8 +151,57 @@ class Fragment {
    * @returns {Array<string>} list of supported mime types
    */
   get formats() {
-    const supportedFormats = [/^text\//, 'application/json'];
-    return supportedFormats;
+    let mimeTypes = [];
+    switch (this.type) {
+      case validFileTypes.txt:
+      case validFileTypes.txtCharset:
+        mimeTypes = [validFileTypes.txt];
+        break;
+      case validFileTypes.md:
+        mimeTypes = [validFileTypes.md, validFileTypes.txt, validFileTypes.html];
+        break;
+      case validFileTypes.html:
+        mimeTypes = [validFileTypes.html, validFileTypes.txt];
+        break;
+      case validFileTypes.json:
+        mimeTypes = [validFileTypes.json, validFileTypes.txt];
+        break;
+      case validFileTypes.png:
+        mimeTypes = [
+          validFileTypes.png,
+          validFileTypes.jpg,
+          validFileTypes.webp,
+          validFileTypes.gif,
+        ];
+        break;
+      case validFileTypes.jpg:
+        mimeTypes = [
+          validFileTypes.png,
+          validFileTypes.jpg,
+          validFileTypes.webp,
+          validFileTypes.gif,
+        ];
+        break;
+      case validFileTypes.gif:
+        mimeTypes = [
+          validFileTypes.png,
+          validFileTypes.jpg,
+          validFileTypes.webp,
+          validFileTypes.gif,
+        ];
+        break;
+      case validFileTypes.webp:
+        mimeTypes = [
+          validFileTypes.png,
+          validFileTypes.jpg,
+          validFileTypes.webp,
+          validFileTypes.gif,
+        ];
+        break;
+      default:
+        mimeTypes = [];
+    }
+    return mimeTypes;
   }
 
   /**
@@ -146,12 +210,31 @@ class Fragment {
    * @returns {boolean} true if we support this Content-Type (i.e., type/subtype)
    */
   static isSupportedType(value) {
-    return (
-      /^text\//.test(value) == true ||
-      // value === 'text/plain' ||
-      // value === 'text/plain; charset=utf-8' ||
-      value === 'application/json'
-    );
+    return Object.values(validFileTypes).includes(value);
+  }
+
+  static isValidExtType(ext) {
+    return validFileTypes[ext];
+  }
+
+  async convertFragment(fragmentData, conversionType) {
+    switch (conversionType) {
+      case 'text/plain':
+        return fragmentData.toString();
+      case 'text/html':
+        if (this.type === 'text/markdown') return md.render(fragmentData.toString());
+        return fragmentData;
+      case 'image/png':
+        return await sharp(fragmentData).png();
+      case 'image/jpeg':
+        return await sharp(fragmentData).jpeg();
+      case 'image/gif':
+        return await sharp(fragmentData).gif();
+      case 'image/webp':
+        return await sharp(fragmentData).webp();
+      default:
+        return fragmentData;
+    }
   }
 }
 

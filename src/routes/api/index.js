@@ -29,7 +29,7 @@ router.get('/fragments', require('./get'));
 // You can use Buffer.isBuffer(req.body) to test if it was parsed by the raw body parser.
 router.post('/fragments', rawBody(), require('./post'));
 
-router.get('/fragments/:id.:ext?', require('./getId'));
+router.get('/fragments/:id', require('./getId'));
 
 router.get('/fragments/:id/info', require('./getIdInfo'));
 
